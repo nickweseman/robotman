@@ -4,8 +4,13 @@ var gScore;
 var gHighScore;
 var gHighScoreValue = 0;
 var gBackground;
+var gReadyToPlay;
+var readyToBegin = false;
 
 var GRACE_PERIOD = 5;
+
+CANVAS_WIDTH = 960;
+CANVAS_HEIGHT = 540;
 
 // Icons made by Lorc. Available on http://game-icons.net
 // Background created by Freepik
@@ -13,13 +18,15 @@ var GRACE_PERIOD = 5;
 var gCanvas = {
     canvas : document.createElement("canvas"),
 
-    start : function() {
-        this.canvas.width = 480;
-        this.canvas.height = 270;
+    setup : function() {
+        this.canvas.width = CANVAS_WIDTH;
+        this.canvas.height = CANVAS_HEIGHT;
         this.context = this.canvas.getContext("2d");
 
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+    },
 
+    start : function() {
         this.frameNo = 0;
         this.interval = setInterval(updateCanvas, 20);
     },
@@ -36,30 +43,35 @@ var gCanvas = {
 document.addEventListener('DOMContentLoaded', setupGame, false);
 
 function setupGame() {
-    document.getElementById("btn-flap").addEventListener(
-        "mousedown", flapDown);
-    document.getElementById("btn-flap").addEventListener(
-        "mouseup", flapUp);
-
-    document.getElementById("play-again").addEventListener("click", beginGame);
-
     window.addEventListener('keydown', flapDown);
     window.addEventListener('keyup', flapUp);
 
-    beginGame();
+    window.addEventListener('mousedown', flapDown);
+    window.addEventListener('mouseup', flapUp);
+
+    if(gReadyToPlay === undefined) {
+        gReadyToPlay = new Label("30px", "Consolas", "black", 700, CANVAS_HEIGHT / 2);
+    }
+
+    readyToBegin = true;
+    gCanvas.setup();
+
+    gBackground = new Background(CANVAS_WIDTH, CANVAS_HEIGHT, 0, 0, "background_large.jpg");
+
+    gReadyToPlay.text = "Click or press any key to begin.";
+    gReadyToPlay.update();
+    gBackground.update();
 }
 
 function beginGame() {
-    document.getElementById("play-again").style.visibility = "hidden";
+    readyToBegin = false;
 
-    gBird = new Bird(30, 30, 10, 120, "robotman_off.png");
+    gBird = new Bird(64, 64, 10, 240, "robotman_off_large.png");
     gBird.gravity = 0.05;
 
     gWalls = [];
 
-    gScore = new Score("30px", "Consolas", "black", 480, 40);
-
-    gBackground = new Background(480, 270, 0, 0, "background.jpg");
+    gScore = new Label("30px", "Consolas", "black", 960, 80);
 
     gCanvas.start();
     gCanvas.clear();
@@ -67,12 +79,16 @@ function beginGame() {
 
 function flapDown() {
     gBird.gravity = -0.2;
-    gBird.image.src = "robotman_on.png";
+    gBird.image.src = "robotman_on_large.png";
 }
 
 function flapUp() {
-    gBird.gravity = 0.05;
-    gBird.image.src = "robotman_off.png";
+    if(readyToBegin) {
+        beginGame();
+    } else {
+        gBird.gravity = 0.05;
+        gBird.image.src = "robotman_off_large.png";
+    }
 }
 
 function Background(width, height, x, y, imageSrc) {
@@ -90,7 +106,7 @@ function Background(width, height, x, y, imageSrc) {
     };
 
     this.updatePosition = function() {
-        this.x -= 1;
+        this.x -= 4;
 
         if (this.x == -(width)) {
             this.x = 0;
@@ -98,7 +114,7 @@ function Background(width, height, x, y, imageSrc) {
     };
 }
 
-function Score(fontHeight, font, color, x, y) {
+function Label(fontHeight, font, color, x, y) {
     this.text = "";
 
     this.color = color;
@@ -125,11 +141,12 @@ function Wall(width, height, x, y, imageSrc) {
 
     this.update = function() {
         var context = gCanvas.context;
+        //TODO Still need to figure out how to do repeating image that scrolls
         //context.rect(this.x, this.y, 50, this.height);
         //context.fillStyle = context.createPattern(this.image, "repeat");
         //context.fill();
 
-         context.fillStyle = "black";
+        context.fillStyle = "black";
         context.fillRect(this.x, this.y, this.width, this.height);
     };
 }
@@ -186,8 +203,8 @@ function Bird(width, height, x, y, imageSrc) {
         var wallTop = wall.y;
         var wallBottom = wall.y + wall.height;
 
-        if ((birdBottom < wallTop) ||
-            (birdTop > wallBottom) ||
+        if ((wallTop - birdBottom > -(GRACE_PERIOD)) ||
+            (birdTop - wallBottom > -(GRACE_PERIOD)) ||
             (wallLeft - birdRight > -(GRACE_PERIOD)) ||
             (birdLeft - wallRight > -(GRACE_PERIOD))) {
             return false;
@@ -197,10 +214,8 @@ function Bird(width, height, x, y, imageSrc) {
 }
 
 function endGame() {
-    document.getElementById("play-again").style.visibility = "visible";
-
     if(gHighScore === undefined) {
-        gHighScore = new Score("30px", "Consolas", "red", 480, 100);
+        gHighScore = new Label("30px", "Consolas", "red", CANVAS_WIDTH, 120);
     }
 
     if(gCanvas.frameNo > gHighScoreValue) {
@@ -213,9 +228,12 @@ function endGame() {
         gHighScore.color = "black";
     }
 
-    gBird.image.src = "robotman_dead.png";
+    gBird.image.src = "robotman_dead_large.png";
+
+    readyToBegin = true;
 
     gHighScore.update();
+    gReadyToPlay.update();
     gBird.update();
 
     gCanvas.stop();
@@ -236,26 +254,26 @@ function updateCanvas() {
     gBackground.updatePosition();
     gBackground.update();
 
-    if (gCanvas.frameNo == 1 || needNewWall(150)) {
+    if (gCanvas.frameNo == 1 || needNewWall()) {
         var canvasWidth = gCanvas.canvas.width;
         var canvasHeight = gCanvas.canvas.height;
 
-        var minHeight = 20;
-        var maxHeight = 200;
+        var minHeight = 100;
+        var maxHeight = 350;
 
         var height = Math.floor(Math.random() * (maxHeight - minHeight + 1) + minHeight);
 
-        var minGap = 50;
+        var minGap = 100;
         var maxGap = 200;
 
         var gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
 
-        gWalls.push(new Wall(10, height, canvasWidth, 0, "wall.png"));
-        gWalls.push(new Wall(10, canvasHeight - height - gap, canvasWidth, height + gap,
-            "wall.png"));
+        gWalls.push(new Wall(20, height, canvasWidth, 0, "wall_large.png"));
+        gWalls.push(new Wall(20, canvasHeight - height - gap, canvasWidth, height + gap,
+            "wall_large.png"));
     }
     for (i = 0; i < gWalls.length; i += 1) {
-        gWalls[i].x += -1;
+        gWalls[i].x += -4;
         gWalls[i].update();
     }
 
@@ -266,6 +284,25 @@ function updateCanvas() {
     gBird.update();
 }
 
-function needNewWall(n) {
-    return (gCanvas.frameNo / n) % 1 == 0;
+function needNewWall() {
+    var wallInterval;
+
+    if(gCanvas.frameNo < 1000) {
+        wallInterval = 200;
+    } else if(gCanvas.frameNo < 2000) {
+        wallInterval = 180;
+    } else if(gCanvas.frameNo < 3000) {
+        wallInterval = 160;
+    } else if(gCanvas.frameNo < 4000) {
+        wallInterval = 140;
+    } else if(gCanvas.frameNo < 5000) {
+        wallInterval = 120;
+    } else if(gCanvas.frameNo < 7500) {
+        wallInterval = 100;
+    } else if(gCanvas.frameNo < 10000) {
+        wallInterval = 80;
+    } else {
+        wallInterval = 60;
+    }
+    return (gCanvas.frameNo / wallInterval) % 1 == 0;
 }
