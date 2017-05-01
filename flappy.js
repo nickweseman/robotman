@@ -52,15 +52,17 @@ function setupGame() {
     if(gReadyToPlay === undefined) {
         gReadyToPlay = new Label("30px", "Consolas", "black", 700, CANVAS_HEIGHT / 2);
     }
+    //TODO Background doesn't show until gCanvas.start()
+    if(gBackground === undefined) {
+        gBackground = new Background(CANVAS_WIDTH, CANVAS_HEIGHT, 0, 0, "background_large.jpg");
+    }
 
     readyToBegin = true;
     gCanvas.setup();
 
-    gBackground = new Background(CANVAS_WIDTH, CANVAS_HEIGHT, 0, 0, "background_large.jpg");
-
     gReadyToPlay.text = "Click or press any key to begin.";
-    gReadyToPlay.update();
     gBackground.update();
+    gReadyToPlay.update();
 }
 
 function beginGame() {
