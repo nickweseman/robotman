@@ -1,9 +1,11 @@
 var gBird;
 var gWalls = [];
+
 var gScore;
 var gHighScore;
-var gHighScoreValue = 0;
+
 var gBackground;
+
 var gReadyToPlay;
 var readyToBegin = false;
 
@@ -54,7 +56,7 @@ function setupGame() {
     }
     //TODO Background doesn't show until gCanvas.start()
     if(gBackground === undefined) {
-        gBackground = new Background(CANVAS_WIDTH, CANVAS_HEIGHT, 0, 0, "background_large.jpg");
+        gBackground = new Background(CANVAS_WIDTH, CANVAS_HEIGHT, 0, 0, "img/background_lines_large.jpg");
     }
 
     readyToBegin = true;
@@ -68,20 +70,22 @@ function setupGame() {
 function beginGame() {
     readyToBegin = false;
 
-    gBird = new Bird(64, 64, 10, 240, "robotman_off_large.png");
+    gBird = new Bird(64, 64, 10, 240, "img/robotman_off_large.png");
     gBird.gravity = 0.05;
 
     gWalls = [];
 
-    gScore = new Label("30px", "Consolas", "black", 960, 80);
+    gScore = new Label("30px", "Consolas", "white", 960, 80);
 
     gCanvas.start();
     gCanvas.clear();
 }
 
 function flapDown() {
-    gBird.gravity = -0.2;
-    gBird.image.src = "robotman_on_large.png";
+    if(!readyToBegin) {
+        gBird.gravity = -0.2;
+        gBird.image.src = "img/robotman_on_large.png";
+    }
 }
 
 function flapUp() {
@@ -89,7 +93,7 @@ function flapUp() {
         beginGame();
     } else {
         gBird.gravity = 0.05;
-        gBird.image.src = "robotman_off_large.png";
+        gBird.image.src = "img/robotman_off_large.png";
     }
 }
 
@@ -139,11 +143,11 @@ function Wall(width, height, x, y, imageSrc) {
     this.height = height;
 
     this.image = new Image();
-    this.image.src = imageSrc;
+    this.image.src = imageSrc; // not currently used
 
     this.update = function() {
         var context = gCanvas.context;
-        //TODO Still need to figure out how to do repeating image that scrolls
+        //TODO Figure out how to do repeating image that scrolls
         //context.rect(this.x, this.y, 50, this.height);
         //context.fillStyle = context.createPattern(this.image, "repeat");
         //context.fill();
@@ -215,24 +219,31 @@ function Bird(width, height, x, y, imageSrc) {
     };
 }
 
-function endGame() {
+function endGame(highScoreObj) {
     if(gHighScore === undefined) {
         gHighScore = new Label("30px", "Consolas", "red", CANVAS_WIDTH, 120);
     }
 
-    if(gCanvas.frameNo > gHighScoreValue) {
-        gHighScoreValue = gCanvas.frameNo;
+    var highScoreValue = highScoreObj['highScore'];
 
-        gHighScore.text = "NEW HIGH SCORE: " + gHighScoreValue;
-        gHighScore.color = "red";
-    } else {
-        gHighScore.text = "HIGH SCORE: " + gHighScoreValue;
-        gHighScore.color = "black";
+    if(highScoreValue === undefined) {
+        highScoreValue = 0;
     }
 
-    gBird.image.src = "robotman_dead_large.png";
+    if(gCanvas.frameNo > highScoreValue) {
+        chrome.storage.sync.set({'highScore': gCanvas.frameNo});
+
+        gHighScore.text = "NEW HIGH SCORE: " + gCanvas.frameNo;
+        gHighScore.color = "red";
+    } else {
+        gHighScore.text = "HIGH SCORE: " + highScoreValue;
+        gHighScore.color = "white";
+    }
+
+    gBird.image.src = "img/robotman_dead_large.png";
 
     readyToBegin = true;
+    gReadyToPlay.color = "white";
 
     gHighScore.update();
     gReadyToPlay.update();
@@ -244,7 +255,7 @@ function endGame() {
 function updateCanvas() {
     for (var i = 0; i < gWalls.length; i += 1) {
         if (gBird.collidesWith(gWalls[i])) {
-            endGame();
+            chrome.storage.sync.get(['highScore'], endGame);
             return;
         }
     }
@@ -270,9 +281,9 @@ function updateCanvas() {
 
         var gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
 
-        gWalls.push(new Wall(20, height, canvasWidth, 0, "wall_large.png"));
+        gWalls.push(new Wall(20, height, canvasWidth, 0, "img/wall_large.png"));
         gWalls.push(new Wall(20, canvasHeight - height - gap, canvasWidth, height + gap,
-            "wall_large.png"));
+            "img/wall_large.png"));
     }
     for (i = 0; i < gWalls.length; i += 1) {
         gWalls[i].x += -4;
@@ -290,21 +301,21 @@ function needNewWall() {
     var wallInterval;
 
     if(gCanvas.frameNo < 1000) {
-        wallInterval = 200;
-    } else if(gCanvas.frameNo < 2000) {
         wallInterval = 180;
+    } else if(gCanvas.frameNo < 2000) {
+        wallInterval = 165;
     } else if(gCanvas.frameNo < 3000) {
-        wallInterval = 160;
-    } else if(gCanvas.frameNo < 4000) {
         wallInterval = 140;
+    } else if(gCanvas.frameNo < 4000) {
+        wallInterval = 125;
     } else if(gCanvas.frameNo < 5000) {
-        wallInterval = 120;
+        wallInterval = 110;
     } else if(gCanvas.frameNo < 7500) {
-        wallInterval = 100;
+        wallInterval = 95;
     } else if(gCanvas.frameNo < 10000) {
         wallInterval = 80;
     } else {
-        wallInterval = 60;
+        wallInterval = 65;
     }
     return (gCanvas.frameNo / wallInterval) % 1 == 0;
 }

@@ -4,12 +4,15 @@
   "version": "1.0",
   "minimum_chrome_version": "23",
   "icons": {
-    "16": "icon_16.png",
-    "128": "icon_128.png"
+    "16": "img/icon_16.png",
+    "128": "img/icon_128.png"
   },
   "app": {
     "background": {
-      "scripts": ["background.js"]
+      "scripts": ["js/background.js"]
     }
-  }
+  },
+  "permissions": [
+    "storage"
+  ]
 }
