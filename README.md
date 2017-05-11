@@ -1,5 +1,7 @@
 # Robotman, a game inspired by flappy bird.
 
+## Google Chrome
+
 ## Installation from Google Chrome Web Store Instructions:
 1.  Visit: https://chrome.google.com/webstore/detail/askcom-search-extension/eifpckadbbkedodfeiddebnfelpldnab?hl=en-US&gl=US to install.
 
