@@ -30,3 +30,8 @@ Coming Soon
 
 Coming Soon
 
+<br>
+<br>
+
+Icons made by Lorc. Available on http://game-icons.net
+Background created by Freepik
