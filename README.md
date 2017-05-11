@@ -19,14 +19,14 @@
 <br>
 <br>
 
-# Opera Extension for Ask.com (formerly known as Ask Jeeves)
+## Opera
 
 Coming Soon
 
 <br>
 <br>
 
-# Firefox Extension for Ask.com (formerly known as Ask Jeeves)
+## Firefox
 
 Coming Soon
 
