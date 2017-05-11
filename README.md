@@ -2,7 +2,7 @@
 
 ## Google Chrome
 
-## Installation from Google Chrome Web Store Instructions:
+#### Installation from Google Chrome Web Store Instructions:
 1.  Visit: https://chrome.google.com/webstore/detail/askcom-search-extension/eifpckadbbkedodfeiddebnfelpldnab?hl=en-US&gl=US to install.
 
 ## Installation from Source Instructions:
