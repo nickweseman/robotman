@@ -1,4 +1,4 @@
-# Robotman, a game inspired by flappy bird with ROBOTS!
+# Robotman: a game inspired by flappy bird, but with ROBOTS!
 
 ## Google Chrome
 
