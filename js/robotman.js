@@ -14,9 +14,6 @@ var GRACE_PERIOD = 5;
 CANVAS_WIDTH = 960;
 CANVAS_HEIGHT = 540;
 
-// Icons made by Lorc. Available on http://game-icons.net
-// Background created by Freepik
-
 var gCanvas = {
     canvas : document.createElement("canvas"),
 
