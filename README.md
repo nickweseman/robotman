@@ -3,7 +3,7 @@
 ## Google Chrome
 
 ### Installation from Google Chrome Web Store Instructions:
-1.  Visit: https://chrome.google.com/webstore/detail/askcom-search-extension/eifpckadbbkedodfeiddebnfelpldnab?hl=en-US&gl=US to install.
+1.  Visit: https://chrome.google.com/webstore/detail/robotman/cjpdlmjbocfbhjgdpmfkcphkacmighmb?hl=en-US&gl=US to install.
 
 ### Installation from Source Instructions:
 1. Download "robotman" folder to your computer
