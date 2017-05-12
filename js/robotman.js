@@ -140,17 +140,16 @@ function Wall(width, height, x, y, imageSrc) {
     this.height = height;
 
     this.image = new Image();
-    this.image.src = imageSrc; // not currently used
+    this.image.src = imageSrc;
 
     this.update = function() {
         var context = gCanvas.context;
-        //TODO Figure out how to do repeating image that scrolls
-        //context.rect(this.x, this.y, 50, this.height);
-        //context.fillStyle = context.createPattern(this.image, "repeat");
-        //context.fill();
 
-        context.fillStyle = "black";
-        context.fillRect(this.x, this.y, this.width, this.height);
+        context.fillStyle = context.createPattern(this.image, "repeat");
+        context.save();
+        context.translate(this.x, this.y);
+        context.fillRect(0, 0, this.width, this.height);
+        context.restore();
     };
 }
 
