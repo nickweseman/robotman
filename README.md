@@ -13,8 +13,7 @@
 5. Select the "robotman" folder you chose above.
 
 ### To Play:
-1.  Type "chrome://apps" into the browser url.
-2.  Click "Robotman" app.
+1.  Click "Robotman" icon at top right of the browser.
 
 <br>
 <br>
