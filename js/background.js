@@ -14,6 +14,5 @@ chrome.browserAction.onClicked.addListener(function() {
         'height': height,
         'left': Math.round((screenWidth - width) / 2),
         'top': Math.round((screenHeight - height) / 2),
-        'focused': true
     });
 });
