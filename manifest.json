@@ -3,7 +3,7 @@
   "name": "Robotman",
   "short_name": "Robotman",
   "description":  "Play Robotman.  It's like Flappy Bird, but with robots!",
-  "version": "1.0",
+  "version": "2.0",
   "author": "Nick Weseman",
   "minimum_chrome_version": "23",
   "icons": {
