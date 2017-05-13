@@ -32,7 +32,7 @@
 ### To Play:
 1.  Click "Robotman" icon at top right of the browser.
 
-### To Remove the Extension:
+### To Remove:
 1.  Click three horizontal lines button in the top right and click "Add-ons"
 2.  Find "Robotman" and click "Remove"
 
