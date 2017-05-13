@@ -36,6 +36,9 @@
 1.  Click three horizontal lines button in the top right and click "Add-ons"
 2.  Find "Robotman" and click "Remove"
 
+<br>
+<br>
+
 ## Opera
 
 ## Installation from Opera Web Store Instructions:
@@ -50,11 +53,6 @@
 
 ### To Play:
 1.  Click "Robotman" icon at top right of the browser.
-
-<br>
-<br>
-
-
 
 <br>
 <br>
