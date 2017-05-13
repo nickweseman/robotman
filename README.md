@@ -38,7 +38,18 @@
 
 ## Opera
 
-Coming Soon
+## Installation from Opera Web Store Instructions:
+1.  Note:  Opera Extension is currently pending approval
+
+## Installation from Source Instructions:
+1. Download "robotman" folder to your computer
+2. Open Opera and type "opera:extensions" into the browser url
+3. Make sure that the "Developer mode" button is clicked.
+4. Click "Load unpacked extension..."
+5. Select the "robotman" folder you chose above.
+
+### To Play:
+1.  Click "Robotman" icon at top right of the browser.
 
 <br>
 <br>
