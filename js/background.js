@@ -5,6 +5,7 @@
 chrome.browserAction.onClicked.addListener(function() {
     var screenWidth = screen.availWidth;
     var screenHeight = screen.availHeight;
+    //Note:  Set height = 700 for Opera to account for toolbars
     var width = 980;
     var height = 634;
 
