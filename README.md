@@ -42,7 +42,7 @@
 ## Opera
 
 ## Installation from Opera Web Store Instructions:
-1.  Note:  Opera Extension is currently pending approval
+1.  Visit: https://addons.opera.com/en/extensions/details/robotman/?display=en to install.
 
 ## Installation from Source Instructions:
 1. Download "robotman" folder to your computer
