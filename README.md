@@ -18,6 +18,16 @@
 <br>
 <br>
 
+**bold** __italic__
+
+>this is a quote
+
+`this is code`
+
+[this is a link](http://foo.com)
+<http://foo.com>
+<a href="http://foo.com">foo</a>
+
 ## Firefox
 
 ### Installation from Firefox Web Store Instructions:
