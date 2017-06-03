@@ -21,7 +21,7 @@
 ## Firefox
 
 ### Installation from Firefox Web Store Instructions:
-1.  Visit: https://addons.mozilla.org/en-US/firefox/addon/robotman/ to install.
+1.  Robotman is pending approval in the Firefox Web Store.
 
 ## Installation from Source Instructions:
 1. Download "robotman" folder to your computer
